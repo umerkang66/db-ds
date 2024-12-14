@@ -11,12 +11,12 @@
 
 using namespace std;
 
-class Evaluate
+class DbEngine
 {
   vector<DB *> all_databases;
 
 public:
-  Evaluate()
+  DbEngine()
   {
     // get all the databases from the file
     if (filesystem::exists(ALL_DATABASES_FOLDER) && filesystem::is_directory(ALL_DATABASES_FOLDER))
@@ -57,7 +57,7 @@ public:
 
   void handle_show_table_as_JSON(string name, string populate);
 
-  ~Evaluate()
+  ~DbEngine()
   {
     for (int i = 0; i < all_databases.size(); i++)
     {

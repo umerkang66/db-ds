@@ -1,4 +1,4 @@
-#include "evaluate.hpp"
+#include "db-engine.hpp"
 
 int splitted_arr_length(string *str_arr)
 {
@@ -10,7 +10,7 @@ int splitted_arr_length(string *str_arr)
   return length;
 }
 
-void Evaluate::evaluate(const string &expression)
+void DbEngine::evaluate(const string &expression)
 {
   string *tokens = split(expression, ' ');
 
@@ -123,7 +123,7 @@ void Evaluate::evaluate(const string &expression)
   }
 }
 
-void Evaluate::handle_show_current_database()
+void DbEngine::handle_show_current_database()
 {
   if (current_db == nullptr)
     cout << "No DB is activated, type 'USE <database_name>' to Select the database" << endl;
@@ -131,7 +131,7 @@ void Evaluate::handle_show_current_database()
     cout << current_db->get_db_name() << endl;
 }
 
-void Evaluate::handle_show_databases()
+void DbEngine::handle_show_databases()
 {
   // get all the databases from the 'databases' folder
   if (filesystem::exists(ALL_DATABASES_FOLDER) && filesystem::is_directory(ALL_DATABASES_FOLDER))
@@ -147,7 +147,7 @@ void Evaluate::handle_show_databases()
   }
 }
 
-void Evaluate::handle_create_database(const string &name)
+void DbEngine::handle_create_database(const string &name)
 {
   filesystem::create_directory(ALL_DATABASES_FOLDER);
   const string db_name = !str_includes(name, ".db") ? name + ".db" : name;
@@ -157,42 +157,42 @@ void Evaluate::handle_create_database(const string &name)
   cout << "DB: " << db_name << " CREATED" << endl;
 }
 
-void Evaluate::handle_create_table(string name, string columns)
+void DbEngine::handle_create_table(string name, string columns)
 {
   Table new_table(name, current_db);
   new_table.create_table(columns);
 }
 
-void Evaluate::handle_create_row(string table_name, string row)
+void DbEngine::handle_create_row(string table_name, string row)
 {
   Table new_table(table_name, current_db);
   new_table.add_row(row);
 }
 
-void Evaluate::handle_delete_row(string table_name, string where)
+void DbEngine::handle_delete_row(string table_name, string where)
 {
   Table new_table(table_name, current_db);
   new_table.delete_row(where);
 }
 
-void Evaluate::handle_show_all_tables()
+void DbEngine::handle_show_all_tables()
 {
   current_db->show_all_tables();
 }
 
-void Evaluate::handle_show_table(string name)
+void DbEngine::handle_show_table(string name)
 {
   Table new_table(name, current_db);
   new_table.show_table();
 }
 
-void Evaluate::handle_show_table_with_where(string name, string key, string value)
+void DbEngine::handle_show_table_with_where(string name, string key, string value)
 {
   Table new_table(name, current_db);
   new_table.show_table(key, value);
 }
 
-void Evaluate::handle_show_table_as_JSON(string name, string populate)
+void DbEngine::handle_show_table_as_JSON(string name, string populate)
 {
   Table new_table(name, current_db);
   if (populate == "")

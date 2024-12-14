@@ -1,11 +1,11 @@
 #include <iostream>
-#include "evaluate/evaluate.hpp"
+#include "db-engine/db-engine.hpp"
 
 using namespace std;
 
 int main()
 {
-  Evaluate evaluator;
+  DbEngine evaluator;
   string input;
   cout << "Start to write your Queries. To exit, type (exit)" << endl;
 
