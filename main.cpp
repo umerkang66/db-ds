@@ -1,48 +1,32 @@
 #include <iostream>
+#include "evaluate/evaluate.hpp"
 
 using namespace std;
 
-// InputBuffer struct to manage input
-struct InputBuffer
-{
-  string buffer;
-};
-
-// Function to create a new InputBuffer
-InputBuffer *new_input_buffer() { return new InputBuffer(); }
-
-// Function to print the prompt
-void print_prompt() { cout << "db > "; }
-
-// Function to read input into the InputBuffer
-void read_input(InputBuffer &input_buffer)
-{
-  string input_line;
-  if (!getline(cin, input_line))
-  {
-    cerr << "Error reading input" << endl;
-    exit(1);
-  }
-  input_buffer.buffer = input_line;
-}
-
-// Main function
 int main()
 {
-  InputBuffer *input_buffer = new_input_buffer();
+  Evaluate evaluator;
+  string input;
+  cout << "Start to write your Queries. To exit, type (exit)" << endl;
 
   while (true)
   {
-    print_prompt();
-    read_input(*input_buffer);
+    cout << "> ";
+    getline(cin, input);
 
-    if (input_buffer->buffer == ".exit")
+    if (input == "exit")
     {
-      cout << "Exiting..." << endl;
       break;
     }
-    else
-      cout << "Unrecognized command '" << input_buffer->buffer << "'." << endl;
+
+    try
+    {
+      evaluator.evaluate(input);
+    }
+    catch (const exception &e)
+    {
+      cerr << "Error: " << e.what() << endl;
+    }
   }
 
   return 0;
