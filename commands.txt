@@ -1,0 +1,1 @@
+SHOW TABLE users AS JSON POPULATE <field_in_parent>=<table_name>.<referencing_parent_in_child>.<parents_referenced_field_in_child>
