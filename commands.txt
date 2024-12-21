@@ -1,1 +1,61 @@
-SHOW TABLE users AS JSON POPULATE <field_in_parent>=<table_name>.<referencing_parent_in_child>.<parents_referenced_field_in_child>
+STARTING THE APPLICATION
+$ ./run.sh
+
+TO CLEAR THE TERMINAL
+> clear
+
+TO EXIT
+> exit 
+
+CREATING A DATABASE
+> CREATE DATABASE <database_name>
+> CREATE DATABASE blogs
+
+USE CREATED DATABASE
+> USE blogs
+
+NOW blogs.db IS ACTIVATED, CHECK WHICH DB IS ACTIVATED
+> SHOW CURRENT DATABASE
+
+CREATE TABLE
+> CREATE TABLE <table_name> ...columns
+> CREATE TABLE users firstname,age
+
+SHOWING TABLE
+> SHOW TABLE <table_name>
+> SHOW TABLE users
+
+ADDING ROWS IN TABLE
+> CREATE ROW <table_name> ...row_properties
+> CREATE ROW users "Muhammad Umer",20
+> CREATE ROW users "Abdul Majid",21
+> CREATE ROW users "Haider Ali",19
+
+NOW CHECK THE USERS TABLE
+> SHOW TABLE users
+
+NOW ADD ANOTHER TABLE
+> CREATE TABLE posts content,user_id
+# get the user_id from users' table "SHOW TABLE users"
+> CREATE ROW posts "This is the first Post",<user_id>
+> CREATE ROW posts "A post about C++",<user_id>
+EXAMPLE: WITH INVALID user_id
+> CREATE ROW posts "A post about C++",Ab7D9FCE2fc4e144bAf90fF3
+
+NOW SHOW THIS TABLE
+> SHOW TABLE posts
+
+TO SHOW TABLES AS JSON
+> SHOW TABLE users AS JSON
+
+CHILD REFERENCING
+> SHOW TABLE users AS JSON POPULATE <field_in_parent>=<child_table_name>.<referencing_parent_in_child>.<parents_referenced_field_in_child>
+
+IN OUR CASE
+> SHOW TABLE users AS JSON POPULATE my_posts=posts.user_id.id
+
+PARENT REFERENCING
+> SHOW TABLE users AS JSON POPULATE <field_in_parent>=<child_table_name>.<referencing_parent_field_in_child>.<parents_referenced_field_in_child>
+
+IN OUR CASE
+> SHOW TABLE posts AS JSON POPULATE created_by=users.id.user_id
